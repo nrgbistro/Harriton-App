@@ -32,6 +32,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="05c-c2-0DV" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uJy-bx-Xvd">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -78,7 +79,7 @@
             </objects>
             <point key="canvasLocation" x="1046" y="1252"/>
         </scene>
-        <!--Item-->
+        <!--App-->
         <scene sceneID="6D8-ov-Mnk">
             <objects>
                 <viewController id="oQN-fR-8wd" sceneMemberID="viewController">
@@ -88,7 +89,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="e9A-V4-HQp"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="24j-sL-h4H"/>
+                    <tabBarItem key="tabBarItem" title="App" id="24j-sL-h4H"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DMt-sH-lVl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
