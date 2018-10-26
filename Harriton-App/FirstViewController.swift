@@ -10,6 +10,9 @@ import UIKit
 
 class FirstViewController: UIViewController {
 
+    @IBOutlet weak var letterDay: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
