@@ -34,8 +34,9 @@ class FirstViewController: UIViewController {
         
         let dispatchQueue = DispatchQueue(label: "QueueIdentification", qos: .background)
         dispatchQueue.async{
-            self.getLetterDayData()
-            print(self.urlContent)
+            
+            //self.getLetterDayData()
+            //print(self.urlContent)
             
         }
     }
@@ -88,7 +89,7 @@ class FirstViewController: UIViewController {
                     result.append(range)
                     start = range.lowerBound < range.upperBound ? range.upperBound :
                         index(range.lowerBound, offsetBy: 1, limitedBy: endIndex) ?? endIndex
-            }
-            return result
         }
+        return result
     }
+}
