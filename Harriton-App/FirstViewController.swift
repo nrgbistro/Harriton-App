@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftSoup
 
 class FirstViewController: UIViewController {
 
@@ -26,19 +27,36 @@ class FirstViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        day = Calendar.current.component(.day, from: Date())
-        month = Calendar.current.component(.month, from: Date())
-        year = Calendar.current.component(.year, from: Date())
-        
-        formattedDate = "\(year)-\(month)-\(day)"
-        
         let dispatchQueue = DispatchQueue(label: "QueueIdentification", qos: .background)
         dispatchQueue.async{
+            self.getLetterDayData()
             
-            //self.getLetterDayData()
-            //print(self.urlContent)
-            
+            do{
+                let doc = try SwiftSoup.parse(self.urlContent)
+                do{
+                    let element = try doc.select("div.fsCalendarToday").first()
+                    do{
+                        if(try element?.select("a.fsCalendarEventTitle") == nil){
+                            self.letterDay.font = self.letterDay.font.withSize(35)
+                            self.letterDay.text = "No School!"
+                        }
+                        else{
+                            let link = try element?.select("a.fsCalendarEventTitle")
+                            do{
+                                self.letterDayImport = (try link?.text())!
+                                DispatchQueue.main.async {
+                                    self.letterDay.font = self.letterDay.font.withSize(35)
+                                    self.letterDay.text = self.letterDayImport
+                                }
+                            }
+                        }
+                    }
+                }
+            }catch{
+                print(error)
+            }
         }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,37 +77,5 @@ class FirstViewController: UIViewController {
         } catch let error {
             print("Error: \(error)")
         }
-        //print(urlContent)
-    }
-}
-
-    extension StringProtocol where Index == String.Index {
-        func index(of string: Self, options: String.CompareOptions = []) -> Index? {
-            return range(of: string, options: options)?.lowerBound
-        }
-        func endIndex(of string: Self, options: String.CompareOptions = []) -> Index? {
-            return range(of: string, options: options)?.upperBound
-        }
-        func indexes(of string: Self, options: String.CompareOptions = []) -> [Index] {
-            var result: [Index] = []
-            var start = startIndex
-            while start < endIndex,
-                let range = self[start..<endIndex].range(of: string, options: options) {
-                    result.append(range.lowerBound)
-                    start = range.lowerBound < range.upperBound ? range.upperBound :
-                        index(range.lowerBound, offsetBy: 1, limitedBy: endIndex) ?? endIndex
-            }
-            return result
-        }
-        func ranges(of string: Self, options: String.CompareOptions = []) -> [Range<Index>] {
-            var result: [Range<Index>] = []
-            var start = startIndex
-            while start < endIndex,
-                let range = self[start..<endIndex].range(of: string, options: options) {
-                    result.append(range)
-                    start = range.lowerBound < range.upperBound ? range.upperBound :
-                        index(range.lowerBound, offsetBy: 1, limitedBy: endIndex) ?? endIndex
-        }
-        return result
     }
 }
