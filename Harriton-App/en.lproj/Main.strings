@@ -1,0 +1,30 @@
+
+/* Class = "UITabBarItem"; title = "Events"; ObjectID = "24j-sL-h4H"; */
+"24j-sL-h4H.title" = "Events";
+
+/* Class = "UITextField"; placeholder = "Your Email"; ObjectID = "Gea-lC-fCO"; */
+"Gea-lC-fCO.placeholder" = "Your Email";
+
+/* Class = "UITextField"; text = "ggg"; ObjectID = "Gea-lC-fCO"; */
+"Gea-lC-fCO.text" = "ggg";
+
+/* Class = "UITextField"; placeholder = "Message"; ObjectID = "H8c-cs-BR2"; */
+"H8c-cs-BR2.placeholder" = "Message";
+
+/* Class = "UILabel"; text = "Report a bug with \nthis app"; ObjectID = "PK0-YY-i20"; */
+"PK0-YY-i20.text" = "Report a bug with \nthis app";
+
+/* Class = "UITabBarItem"; title = "Contact"; ObjectID = "Q8G-h1-vGQ"; */
+"Q8G-h1-vGQ.title" = "Contact";
+
+/* Class = "UITabBarItem"; title = "Home"; ObjectID = "UhF-6W-571"; */
+"UhF-6W-571.title" = "Home";
+
+/* Class = "UITabBarItem"; title = "Info"; ObjectID = "caL-ft-A99"; */
+"caL-ft-A99.title" = "Info";
+
+/* Class = "UILabel"; text = "Today's Letter Day:"; ObjectID = "lH5-K0-pAh"; */
+"lH5-K0-pAh.text" = "Today's Letter Day:";
+
+/* Class = "UILabel"; text = "Retreiving from LMSD website..."; ObjectID = "zGn-d9-hMA"; */
+"zGn-d9-hMA.text" = "Retreiving from LMSD website...";

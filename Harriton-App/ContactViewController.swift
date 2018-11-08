@@ -1,5 +1,5 @@
 //
-//  FourthViewController.swift
+//  ContactViewController.swift
 //  Harriton-App
 //
 //  Created by Nolan Gelinas (student HH) on 10/25/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FourthViewController: UIViewController {
+class ContactViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

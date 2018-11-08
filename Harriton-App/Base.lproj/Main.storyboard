@@ -13,20 +13,20 @@
         <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="FirstViewController" customModule="Harriton_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Harriton_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Today's Letter Day:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lH5-K0-pAh" userLabel="Current Letter Day Label">
-                                <rect key="frame" x="16" y="72" width="343" height="58"/>
+                                <rect key="frame" x="0.0" y="42" width="375" height="79"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="KannadaSangamMN" family="Kannada Sangam MN" pointSize="38"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Retreiving from LMSD website..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGn-d9-hMA" userLabel="Letter Day">
-                                <rect key="frame" x="0.0" y="138" width="375" height="88"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Retreiving from LMSD website..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGn-d9-hMA" userLabel="Letter Day Label">
+                                <rect key="frame" x="0.0" y="113" width="375" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="KannadaSangamMN" family="Kannada Sangam MN" pointSize="30"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -36,11 +36,11 @@
                         <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" image="icons8-home-25" id="UhF-6W-571">
+                    <tabBarItem key="tabBarItem" title="Home" image="home-25" id="UhF-6W-571">
                         <color key="badgeColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBarItem>
                     <connections>
-                        <outlet property="letterDay" destination="zGn-d9-hMA" id="aDd-yu-Xzn"/>
+                        <outlet property="letterDayLabel" destination="zGn-d9-hMA" id="kdZ-RF-Imi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -68,7 +68,7 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
-        <!--Item-->
+        <!--Info-->
         <scene sceneID="2FE-d3-xjB">
             <objects>
                 <viewController id="Vad-XH-3jN" customClass="ThirdViewController" customModule="Harriton_App" customModuleProvider="target" sceneMemberID="viewController">
@@ -78,29 +78,56 @@
                         <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <viewLayoutGuide key="safeArea" id="ZiD-sZ-i4B"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="caL-ft-A99"/>
+                    <tabBarItem key="tabBarItem" title="Info" image="about-25" id="caL-ft-A99"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Got-UA-JPV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1046" y="565"/>
         </scene>
-        <!--Item-->
+        <!--Contact-->
         <scene sceneID="uUb-Ey-eMi">
             <objects>
-                <viewController id="kEi-Ro-aBu" customClass="FourthViewController" customModule="Harriton_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="kEi-Ro-aBu" customClass="ContactViewController" customModule="Harriton_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OaA-Yz-PkM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PK0-YY-i20">
+                                <rect key="frame" x="0.0" y="20" width="375" height="132"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">Report a bug with 
+this app</string>
+                                <fontDescription key="fontDescription" name="KannadaSangamMN" family="Kannada Sangam MN" pointSize="38"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ggg" allowsEditingTextAttributes="YES" borderStyle="line" placeholder="Your Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gea-lC-fCO">
+                                <rect key="frame" x="65" y="219" width="245" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" allowsEditingTextAttributes="YES" borderStyle="line" placeholder="Message" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="H8c-cs-BR2">
+                                <rect key="frame" x="65" y="266" width="245" height="161"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <viewLayoutGuide key="safeArea" id="Wjp-7e-1WB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="Q8G-h1-vGQ"/>
+                    <tabBarItem key="tabBarItem" title="Contact" image="contact-25" id="Q8G-h1-vGQ"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yqH-fG-uJ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1046" y="1252"/>
+            <point key="canvasLocation" x="1045.5999999999999" y="1251.7241379310346"/>
         </scene>
-        <!--Info-->
+        <!--Events-->
         <scene sceneID="6D8-ov-Mnk">
             <objects>
                 <viewController id="oQN-fR-8wd" customClass="SecondViewController" customModule="Harriton_App" customModuleProvider="target" sceneMemberID="viewController">
@@ -110,7 +137,7 @@
                         <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <viewLayoutGuide key="safeArea" id="e9A-V4-HQp"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Info" image="icons8-about-25" id="24j-sL-h4H"/>
+                    <tabBarItem key="tabBarItem" title="Events" image="exclamation-mark-25" id="24j-sL-h4H"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DMt-sH-lVl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -118,7 +145,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icons8-about-25" width="25" height="25"/>
-        <image name="icons8-home-25" width="25" height="25"/>
+        <image name="about-25" width="25" height="25"/>
+        <image name="contact-25" width="25" height="25"/>
+        <image name="exclamation-mark-25" width="25" height="25"/>
+        <image name="home-25" width="25" height="25"/>
     </resources>
 </document>
