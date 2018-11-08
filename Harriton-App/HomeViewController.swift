@@ -15,18 +15,33 @@ class HomeViewController: UIViewController {
     
     var urlContent = ""
     var htmlRetrievalFailed = false
+    var continueExecution = true
     var letterDay = "" {
+        //after the getLetterDay() func has ran and set the letterDay variable correctly:
         didSet{
+            let defaults = UserDefaults.standard
+            defaults.set(getTodaysDate(), forKey: "Date")
+            defaults.set(letterDay, forKey: "LetterDay")
             DispatchQueue.main.async {
                 self.letterDayLabel.text = self.letterDay
             }
         }
     }
     
+    
+    // --------
+    // Main 'runner' function
+    // --------
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let defaults = UserDefaults.standard
-        getLetterDay()
+        let defaults = UserDefaults.standard
+        
+        if(getTodaysDate() == defaults.string(forKey: "Date")){
+            letterDayLabel.text = defaults.string(forKey: "LetterDay")
+        }
+        else{
+            getLetterDay()
+        }
     }
     
     
@@ -39,6 +54,7 @@ class HomeViewController: UIViewController {
             let myURLString = "https://www.lmsd.org/harritonhs/campus-life/letter-day"
             guard let myURL = URL(string: myURLString) else {
                 print("Error: \(myURLString) doesn't seem to be a valid URL")
+                continueExecution = false
                 return
             }
             do {
@@ -50,20 +66,13 @@ class HomeViewController: UIViewController {
                 // Since this is called in a background thread, this forces the following code to run on the main thread, which is required to set text on a storyboard
                 DispatchQueue.main.async {
                     self.letterDayLabel.text = "ERROR: Check Connection"
+                    self.continueExecution = false
                 }
             }
         }
-    }
-    
-    func isAppAlreadyLaunchedOnce()->Bool{
-        let defaults = UserDefaults.standard
-        if let _ = defaults.string(forKey: "isAppAlreadyLaunchedOnce"){
-            print("App already launched")
-            return true
-        }else{
-            defaults.set(true, forKey: "isAppAlreadyLaunchedOnce")
-            print("App launched first time")
-            return false
+        else{
+            self.letterDayLabel.text = "NO SCHOOL!"
+            continueExecution = false
         }
     }
     
@@ -71,19 +80,21 @@ class HomeViewController: UIViewController {
         let dispatchQueue = DispatchQueue(label: "QueueIdentification", qos: .background)
         dispatchQueue.async{
             self.getLMSDWebsiteData()
-            do{
-                let doc = try SwiftSoup.parse(self.urlContent)
+            if(self.continueExecution){
                 do{
-                    let element = try doc.select("div.fsCalendarToday").first()
+                    let doc = try SwiftSoup.parse(self.urlContent)
                     do{
-                        let link = try element?.select("a.fsCalendarEventTitle")
+                        let element = try doc.select("div.fsCalendarToday").first()
                         do{
-                            self.letterDay = (try link?.text())!
+                            let link = try element?.select("a.fsCalendarEventTitle")
+                            do{
+                                self.letterDay = (try link?.text())!
+                            }
                         }
                     }
+                }catch{
+                    print(error)
                 }
-            }catch{
-                print(error)
             }
         }
     }
@@ -91,9 +102,15 @@ class HomeViewController: UIViewController {
     func getTodaysDate() -> String {
         let date = Date()
         let calendar = Calendar.current
-        let year = calendar.component(.year, from: date)
-        let month = calendar.component(.month, from: date)
-        let day = calendar.component(.day, from: date)
+        let year:String = String(calendar.component(.year, from: date))
+        var month:String = String(calendar.component(.month, from: date))
+        if(month.count == 1) {
+            month = "0\(month)"
+        }
+        var day:String = String(calendar.component(.day, from: date))
+        if(day.count == 1) {
+            day = "0\(day)"
+        }
         return "\(day)-\(month)-\(year)"
     }
     
@@ -104,6 +121,16 @@ class HomeViewController: UIViewController {
         }
         else{
             return false
+        }
+    }
+    
+    func isTodayANewDay() -> Bool {
+        let defaults = UserDefaults.standard
+        if(defaults.string(forKey: "Date") == getTodaysDate()) {
+            return false
+        }
+        else{
+            return true
         }
     }
     
