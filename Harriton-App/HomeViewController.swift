@@ -8,18 +8,20 @@
 
 import UIKit
 import SwiftSoup
+import Reachability
 
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var letterDayLabel: UILabel!
     
+    let defaults = UserDefaults.standard
     var urlContent = ""
     var htmlRetrievalFailed = false
     var continueExecution = true
     var letterDay = "" {
         //after the getLetterDay() func has ran and set the letterDay variable correctly:
         didSet{
-            let defaults = UserDefaults.standard
+            
             defaults.set(getTodaysDate(), forKey: "Date")
             defaults.set(letterDay, forKey: "LetterDay")
             DispatchQueue.main.async {
@@ -34,13 +36,34 @@ class HomeViewController: UIViewController {
     // --------
     override func viewDidLoad() {
         super.viewDidLoad()
-        let defaults = UserDefaults.standard
         
-        if(getTodaysDate() == defaults.string(forKey: "Date")){
-            letterDayLabel.text = defaults.string(forKey: "LetterDay")
+        NetworkManager.isReachable { networkManagerInstance in
+            let day = Int(Date().day)
+            let month = Int(Date().month)
+            if(self.getTodaysDate() == self.defaults.string(forKey: "Date")){
+                self.letterDayLabel.text = self.defaults.string(forKey: "LetterDay")
+            }
+            else{
+                self.getLetterDay(Day: day, Month: month)
+            }
+            if(self.letterDayLabel.text == ""){
+                self.getLetterDay(Day: day, Month: month)
+            }
         }
-        else{
-            getLetterDay()
+        
+        NetworkManager.isUnreachable { networkManagerInstance in
+            
+            if(!self.isTodayANewDay()) {
+                if(self.defaults.string(forKey: "LetterDay") != nil){
+                    self.letterDayLabel.text = "CANNOT REFRESH"
+                }
+                else{
+                    self.letterDayLabel.text = self.defaults.string(forKey: "LetterDay")
+                }
+            }
+            else{
+                self.letterDayLabel.text = "CANNOT REFRESH"
+            }
         }
     }
     
@@ -51,6 +74,9 @@ class HomeViewController: UIViewController {
     // --------
     func getLMSDWebsiteData() {
         if !(isTodayAWeekend()){
+            DispatchQueue.main.async {
+                self.letterDayLabel.text = "..."
+            }
             let myURLString = "https://www.lmsd.org/harritonhs/campus-life/letter-day"
             guard let myURL = URL(string: myURLString) else {
                 print("Error: \(myURLString) doesn't seem to be a valid URL")
@@ -60,23 +86,25 @@ class HomeViewController: UIViewController {
             do {
                 let myHTMLString = try String(contentsOf: myURL, encoding: .ascii)
                 urlContent = myHTMLString
-            } catch let error {
-                print("Error: \(error)")
+            } catch {
                 
                 // Since this is called in a background thread, this forces the following code to run on the main thread, which is required to set text on a storyboard
                 DispatchQueue.main.async {
                     self.letterDayLabel.text = "ERROR: Check Connection"
-                    self.continueExecution = false
                 }
+                continueExecution = false
             }
         }
         else{
-            self.letterDayLabel.text = "NO SCHOOL!"
+            DispatchQueue.main.async {
+                self.letterDayLabel.text = "NO SCHOOL!"
+            }
             continueExecution = false
         }
     }
     
-    func getLetterDay() {
+    func getLetterDay(Day:Int, Month:Int) {
+        //print("a")
         let dispatchQueue = DispatchQueue(label: "QueueIdentification", qos: .background)
         dispatchQueue.async{
             self.getLMSDWebsiteData()
@@ -84,16 +112,21 @@ class HomeViewController: UIViewController {
                 do{
                     let doc = try SwiftSoup.parse(self.urlContent)
                     do{
-                        let element = try doc.select("div.fsCalendarToday").first()
+                        let innerDiv = try doc.select("div.fsCalendarDate,[data-day=\(Day)] + div.fsCalendarInfo")
                         do{
-                            let link = try element?.select("a.fsCalendarEventTitle")
+                            let a = try innerDiv.select("a").first()
                             do{
-                                self.letterDay = (try link?.text())!
+                                if(try a?.text() != nil){
+                                    self.letterDay = (try a?.text())!
+                                }
+                                else{
+                                    self.letterDay = "ERROR"
+                                }
                             }
                         }
                     }
                 }catch{
-                    print(error)
+                    print("CANNOT PARSE WEBSITE DATA")
                 }
             }
         }
@@ -101,31 +134,27 @@ class HomeViewController: UIViewController {
     
     func getTodaysDate() -> String {
         let date = Date()
-        let calendar = Calendar.current
-        let year:String = String(calendar.component(.year, from: date))
-        var month:String = String(calendar.component(.month, from: date))
-        if(month.count == 1) {
-            month = "0\(month)"
-        }
-        var day:String = String(calendar.component(.day, from: date))
-        if(day.count == 1) {
-            day = "0\(day)"
-        }
-        return "\(day)-\(month)-\(year)"
+        return "\(date.day)-\(date.month)-\(date.year)"
     }
     
     func isTodayAWeekend() -> Bool {
-        let weekday = Calendar.current.component(.weekday, from: Date())
-        if (weekday == 6 || weekday == 7) {
+        let CurrentDate = NSDate()
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = NSTimeZone() as TimeZone?
+        dateFormatter.dateFormat = "ccc"
+        
+        let weekend = dateFormatter.string(from: CurrentDate as Date)
+        let isSaturday = "Sat"
+        let isSunday = "Sun"
+        if weekend == isSaturday || weekend == isSunday {
             return true
         }
-        else{
+        else {
             return false
         }
     }
     
     func isTodayANewDay() -> Bool {
-        let defaults = UserDefaults.standard
         if(defaults.string(forKey: "Date") == getTodaysDate()) {
             return false
         }
@@ -137,5 +166,35 @@ class HomeViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+extension Date {
+    static var yesterday: Date {
+        return Calendar.current.date(byAdding: .day, value: -1, to: Date().noon)!
+    }
+    static var tomorrow: Date {
+        return Calendar.current.date(byAdding: .day, value: 1, to: Date().noon)!
+    }
+    var dayBefore: Date {
+        return Calendar.current.date(byAdding: .day, value: -1, to: noon)!
+    }
+    var dayAfter: Date {
+        return Calendar.current.date(byAdding: .day, value: 1, to: noon)!
+    }
+    var noon: Date {
+        return Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)!
+    }
+    var year: Int {
+        return Calendar.current.component(.year, from: self)
+    }
+    var month: Int {
+        return Calendar.current.component(.month,  from: self)
+    }
+    var day: Int {
+        return Calendar.current.component(.day,  from: self)
+    }
+    var isLastDayOfMonth: Bool {
+        return dayAfter.month != month
     }
 }
