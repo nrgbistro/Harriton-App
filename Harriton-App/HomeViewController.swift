@@ -38,15 +38,18 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         NetworkManager.isReachable { networkManagerInstance in
-            let day = Int(Date().day)
-            let month = Int(Date().month)
+            
+            var day = Int(Date().day)
+            var month = Int(Date().month)
+            
+            
             if(self.getTodaysDate() == self.defaults.string(forKey: "Date")){
                 self.letterDayLabel.text = self.defaults.string(forKey: "LetterDay")
             }
             else{
                 self.getLetterDay(Day: day, Month: month)
             }
-            if(self.letterDayLabel.text == ""){
+            if(self.letterDayLabel.text == "" || self.letterDayLabel.text == "ERROR"){
                 self.getLetterDay(Day: day, Month: month)
             }
         }
@@ -104,7 +107,8 @@ class HomeViewController: UIViewController {
     }
     
     func getLetterDay(Day:Int, Month:Int) {
-        //print("a")
+        
+        
         let dispatchQueue = DispatchQueue(label: "QueueIdentification", qos: .background)
         dispatchQueue.async{
             self.getLMSDWebsiteData()
@@ -112,15 +116,16 @@ class HomeViewController: UIViewController {
                 do{
                     let doc = try SwiftSoup.parse(self.urlContent)
                     do{
-                        let innerDiv = try doc.select("div.fsCalendarDate,[data-day=\(Day)] + div.fsCalendarInfo")
+                        let innerDiv = try doc.select("div.fsCalendarDate,[data-month=\(Month - 1)]:contains(\(Day + 1) + div.fsCalendarInfo")
                         do{
                             let a = try innerDiv.select("a").first()
                             do{
                                 if(try a?.text() != nil){
+                                    
                                     self.letterDay = (try a?.text())!
                                 }
-                                else{
-                                    self.letterDay = "ERROR"
+                                else {
+                                    self.getLetterDay(Day: Day + 1, Month: Month + 1)
                                 }
                             }
                         }
