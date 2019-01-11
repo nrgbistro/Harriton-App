@@ -13,21 +13,42 @@ import Reachability
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var letterDayLabel: UILabel!
+    @IBOutlet weak var tomorrowLetterDayLabel: UILabel!
     
     let defaults = UserDefaults.standard
     var urlContent = ""
-    var htmlRetrievalFailed = false
-    var continueExecution = true
-    var letterDay = "" {
-        //after the getLetterDay() func has ran and set the letterDay variable correctly:
-        didSet{
-            
-            defaults.set(getTodaysDate(), forKey: "Date")
-            defaults.set(letterDay, forKey: "LetterDay")
-            DispatchQueue.main.async {
-                self.letterDayLabel.text = self.letterDay
-            }
+    var todaysLetterDay = ""
+    
+    
+    
+    func getTodaysLetterDay() -> String {
+        if(todaysLetterDay != ""){
+            return todaysLetterDay
         }
+        
+        if(urlContent == ""){
+            let downloadQueue = DispatchGroup()
+            
+            downloadQueue.enter()
+            DispatchQueue(label: "download-content", qos: .utility).async {
+                self.downloadData()
+                downloadQueue.leave()
+            }
+            downloadQueue.wait()
+        }
+        
+        let parseQueue = DispatchGroup()
+        
+        parseQueue.enter()
+        
+        DispatchQueue(label: "parse-html-content", qos: .utility).async {
+            self.todaysLetterDay = parseData(dataToParse: self.urlContent, Day: 12, Month: 0)
+            parseQueue.leave()
+        }
+        
+        parseQueue.wait()
+        
+        return todaysLetterDay
     }
     
     
@@ -37,6 +58,10 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(getTodaysLetterDay())
+        letterDayLabel.text = getTodaysLetterDay()
+        
+        /*
         NetworkManager.isReachable { networkManagerInstance in
             
             var day = Int(Date().day)
@@ -68,75 +93,49 @@ class HomeViewController: UIViewController {
                 self.letterDayLabel.text = "CANNOT REFRESH"
             }
         }
+         */
     }
     
     
     // --------
     // Function that connects to harriton website, and saves its HTML to urlContent
-    // Runs in background thread
     // --------
-    func getLMSDWebsiteData() {
-        if !(isTodayAWeekend()){
-            DispatchQueue.main.async {
-                self.letterDayLabel.text = "..."
-            }
-            let myURLString = "https://www.lmsd.org/harritonhs/campus-life/letter-day"
-            guard let myURL = URL(string: myURLString) else {
-                print("Error: \(myURLString) doesn't seem to be a valid URL")
-                continueExecution = false
-                return
-            }
-            do {
-                let myHTMLString = try String(contentsOf: myURL, encoding: .ascii)
-                urlContent = myHTMLString
-            } catch {
-                
-                // Since this is called in a background thread, this forces the following code to run on the main thread, which is required to set text on a storyboard
-                DispatchQueue.main.async {
-                    self.letterDayLabel.text = "ERROR: Check Connection"
-                }
-                continueExecution = false
-            }
+    func downloadData() {
+        let myURLString = "https://www.lmsd.org/harritonhs/campus-life/letter-day"
+        guard let myURL = URL(string: myURLString) else {
+            print("Error: \(myURLString) is not a valid URL")
+            return
         }
-        else{
-            DispatchQueue.main.async {
-                self.letterDayLabel.text = "NO SCHOOL!"
+        do {
+            urlContent = try String(contentsOf: myURL, encoding: .ascii)
+        } catch {
+            print("oh boi")
             }
-            continueExecution = false
         }
     }
-    
-    func getLetterDay(Day:Int, Month:Int) {
-        
-        
-        let dispatchQueue = DispatchQueue(label: "QueueIdentification", qos: .background)
-        dispatchQueue.async{
-            self.getLMSDWebsiteData()
-            if(self.continueExecution){
+
+    func parseData(dataToParse:String, Day:Int, Month:Int) -> String {
+        do{
+            let doc = try SwiftSoup.parse(dataToParse)
+            do{
+                let innerDiv = try doc.select("div.fsCalendarDate[data-day=\(Day)][data-month=\(Month)] + div.fsCalendarInfo")
                 do{
-                    let doc = try SwiftSoup.parse(self.urlContent)
-                    do{
-                        let innerDiv = try doc.select("div.fsCalendarDate,[data-month=\(Month - 1)]:contains(\(Day + 1) + div.fsCalendarInfo")
-                        do{
-                            let a = try innerDiv.select("a").first()
-                            do{
-                                if(try a?.text() != nil){
-                                    
-                                    self.letterDay = (try a?.text())!
-                                }
-                                else {
-                                    self.getLetterDay(Day: Day + 1, Month: Month + 1)
-                                }
-                            }
-                        }
+                    let a = try innerDiv.select("a.fsCalendarEventTitle")
+                    if(try a.text() != ""){
+                        return (try a.text())
                     }
-                }catch{
-                    print("CANNOT PARSE WEBSITE DATA")
+                    else{
+                        return "No School Today"
+                    }
                 }
             }
         }
+        catch{
+            return "ERROR"
+        }
     }
-    
+ 
+ /*
     func getTodaysDate() -> String {
         let date = Date()
         return "\(date.day)-\(date.month)-\(date.year)"
@@ -171,8 +170,8 @@ class HomeViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-}
+    }*/
+//}
 
 extension Date {
     static var yesterday: Date {
