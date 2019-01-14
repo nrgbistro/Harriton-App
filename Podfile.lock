@@ -1,20 +1,24 @@
 PODS:
   - ReachabilitySwift (4.3.0)
+  - SwiftDate (4.5.1)
   - SwiftSoup (1.7.4)
 
 DEPENDENCIES:
   - ReachabilitySwift
+  - SwiftDate (~> 4.5)
   - SwiftSoup
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - ReachabilitySwift
+    - SwiftDate
     - SwiftSoup
 
 SPEC CHECKSUMS:
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  SwiftDate: 7b56d42a221f582047287deb256b23fc5ed49a60
   SwiftSoup: 92f5b348c131aed8af04f4326db1579ab19fa08c
 
-PODFILE CHECKSUM: 8b6876c99aec3308f03c3d77ba783e950d5e63c7
+PODFILE CHECKSUM: d51ce9a1053f3e959b24ebf8b73bb220c73a535e
 
 COCOAPODS: 1.5.3
