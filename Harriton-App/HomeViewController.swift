@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
     
     
     let defaults = UserDefaults.standard
-    var urlContent = ""
+    var LMSDUrlContent = ""
     var todaysLetterDay = ""
     var nextLetterDay = ""
     
@@ -30,12 +30,13 @@ class HomeViewController: UIViewController {
             return todaysLetterDay
         }
         
-        if(urlContent == ""){
+        if(LMSDUrlContent == ""){
             let downloadQueue = DispatchGroup()
             
             downloadQueue.enter()
             DispatchQueue(label: "download-content", qos: .utility).async {
-                self.downloadLMSDData()
+                let date = DateInRegion()
+                self.downloadLMSDData(Year: date.year, Month: date.month, Day: date.day)
                 downloadQueue.leave()
             }
             downloadQueue.wait()
@@ -45,7 +46,7 @@ class HomeViewController: UIViewController {
         parseQueue.enter()
         
         DispatchQueue(label: "parse-html-content", qos: .utility).async {
-            self.todaysLetterDay = self.parseData(dataToParse: self.urlContent, Day: Date().day, Month: (Date().month - 1))
+            self.todaysLetterDay = self.parseData(dataToParse: self.LMSDUrlContent, Day: Date().day, Month: (Date().month - 1))
             parseQueue.leave()
         }
         
@@ -59,40 +60,30 @@ class HomeViewController: UIViewController {
     
     
     func getNextLetterDay() -> String {
-        nextSchoolDateLabel.lineBreakMode = .byWordWrapping
-        nextSchoolDateLabel.numberOfLines = 2
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = NSTimeZone() as TimeZone?
-        dateFormatter.dateFormat = "cccc"
-        
         if(nextLetterDay != ""){
             return nextLetterDay
         }
         
-        if(urlContent == ""){
+        if(LMSDUrlContent == ""){
             let downloadQueue = DispatchGroup()
             
             downloadQueue.enter()
             DispatchQueue(label: "download-content", qos: .utility).async {
-                self.downloadLMSDData()
+                self.downloadLMSDData(Year: DateInRegion().year, Month: DateInRegion().month, Day: DateInRegion().day)
                 downloadQueue.leave()
             }
             downloadQueue.wait()
         }
         
-        let parseQueue = DispatchGroup()
-        
-        var newDate = DateInRegion()
+        var newDate = DateInRegion() + 17.days
         while(nextLetterDay == "" || nextLetterDay == "No School Today"){
             newDate = newDate + 1.day
-            parseQueue.enter()
-            DispatchQueue(label: "parse-html-content", qos: .utility).async {
-                self.nextLetterDay = self.parseData(dataToParse: self.urlContent, Day: newDate.day, Month: (newDate.month - 1))
-                parseQueue.leave()
+            print(newDate)
+            self.nextLetterDay = self.parseData(dataToParse: self.LMSDUrlContent, Day: newDate.day, Month: (newDate.month - 1))
+            if(newDate.compare(to: <#T##DateInRegion#>, granularity: <#T##Calendar.Component#>)   getLastDateOnCalendar(dataToParse: LMSDUrlContent)){
+                
             }
         }
-        parseQueue.wait()
         
         self.nextSchoolDateLabel.text = "On \(newDate.weekdayName)\n\(newDate.month)/\(newDate.day)/\(newDate.year)"
         return nextLetterDay
@@ -109,10 +100,11 @@ class HomeViewController: UIViewController {
             todayLetterDayLabel.text = "No School Today"
         }
         else{
-            print(getTodaysLetterDay())
             todayLetterDayLabel.text = getTodaysLetterDay()
         }
-        nextLetterDayLabel.text = getNextLetterDay()
+        downloadLMSDData(Year: 2019, Month: 1, Day: 5)
+        print(getLastDateOnCalendar(dataToParse: LMSDUrlContent).day)
+        //nextLetterDayLabel.text = getNextLetterDay()
         
         
         /*
@@ -152,17 +144,16 @@ class HomeViewController: UIViewController {
     
     
     // --------
-    // Function that connects to harriton website, and saves its HTML to urlContent
+    // Function that connects to harriton website, and saves its HTML to LMSDUrlContent
     // --------
-    func downloadLMSDData() {
-        let date = DateInRegion()
-        let myURLString = "https://www.lmsd.org/harritonhs/campus-life/letter-day?cal_date=\(date.year)-\(date.month)-\(date.day)"
+    func downloadLMSDData(Year:Int, Month:Int, Day:Int) {
+        let myURLString = "https://www.lmsd.org/harritonhs/campus-life/letter-day?cal_date=\(Year)-\(Month)-\(Day)"
         guard let myURL = URL(string: myURLString) else {
             print("Error: \(myURLString) is not a valid URL")
             return
         }
         do {
-            urlContent = try String(contentsOf: myURL, encoding: .ascii)
+            LMSDUrlContent = try String(contentsOf: myURL, encoding: .ascii)
         } catch {
             print("oh boi")
         }
@@ -200,7 +191,28 @@ class HomeViewController: UIViewController {
         return "\(date.day)-\(date.month)-\(date.year)"
     }
     */
+    
     func getDay() -> Int {
         return DateInRegion().weekday
+    }
+    
+    func getLastDateOnCalendar(dataToParse:String) -> DateComponents {
+        do{
+            let doc = try SwiftSoup.parse(dataToParse)
+            do{
+                let div = try doc.select("div.fsCalendarDate").last()
+                do{
+                    let Day:Int = Int((try div?.attr("data-day"))!)!
+                    let Month:Int = Int((try div?.attr("data-month"))!)! + 1
+                    let Year:Int = Int((try div?.attr("data-year"))!)!
+                    let date = DateComponents(year: Year, month: Month, day: Day)
+                    return date
+                }
+            }
+        }
+        catch{
+            print("Shite")
+        }
+        return DateComponents()
     }
 }
