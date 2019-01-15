@@ -6,6 +6,6 @@ target 'Harriton-App' do
   # Pods for Harriton-App
 pod 'SwiftSoup'
 pod 'ReachabilitySwift'
-pod 'SwiftDate', '~> 4.5'
+pod 'SwiftDate', '4.5.0'
 
 end

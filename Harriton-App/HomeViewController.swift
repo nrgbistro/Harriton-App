@@ -9,7 +9,7 @@
 import UIKit
 import SwiftSoup
 import Reachability
-import Pods_Harriton_App
+import SwiftDate
 
 class HomeViewController: UIViewController {
     
@@ -35,7 +35,7 @@ class HomeViewController: UIViewController {
             
             downloadQueue.enter()
             DispatchQueue(label: "download-content", qos: .utility).async {
-                self.downloadData()
+                self.downloadLMSDData()
                 downloadQueue.leave()
             }
             downloadQueue.wait()
@@ -45,7 +45,7 @@ class HomeViewController: UIViewController {
         parseQueue.enter()
         
         DispatchQueue(label: "parse-html-content", qos: .utility).async {
-            self.todaysLetterDay = parseData(dataToParse: self.urlContent, Day: Date().day, Month: (Date().month - 1))
+            self.todaysLetterDay = self.parseData(dataToParse: self.urlContent, Day: Date().day, Month: (Date().month - 1))
             parseQueue.leave()
         }
         
@@ -75,7 +75,7 @@ class HomeViewController: UIViewController {
             
             downloadQueue.enter()
             DispatchQueue(label: "download-content", qos: .utility).async {
-                self.downloadData()
+                self.downloadLMSDData()
                 downloadQueue.leave()
             }
             downloadQueue.wait()
@@ -83,45 +83,18 @@ class HomeViewController: UIViewController {
         
         let parseQueue = DispatchGroup()
         
-        if(getDay() == "Fri"){
-            let newDate = Date().threeDaysAfter
+        var newDate = DateInRegion()
+        while(nextLetterDay == "" || nextLetterDay == "No School Today"){
+            newDate = newDate + 1.day
             parseQueue.enter()
             DispatchQueue(label: "parse-html-content", qos: .utility).async {
-                self.nextLetterDay = parseData(dataToParse: self.urlContent, Day: newDate.day, Month: (newDate.month - 1))
+                self.nextLetterDay = self.parseData(dataToParse: self.urlContent, Day: newDate.day, Month: (newDate.month - 1))
                 parseQueue.leave()
             }
-            self.nextSchoolDateLabel.text = "On \(dateFormatter.string(from: newDate as Date))\n\(newDate.month)/\(newDate.day)/\(newDate.year)"
         }
-        else if(getDay() == "Sat"){
-            let newDate = Date().twoDaysAfter
-            parseQueue.enter()
-            DispatchQueue(label: "parse-html-content", qos: .utility).async {
-                self.nextLetterDay = parseData(dataToParse: self.urlContent, Day: newDate.day, Month: (newDate.month - 1))
-                parseQueue.leave()
-            }
-            self.nextSchoolDateLabel.text = "On \(dateFormatter.string(from: newDate as Date))\n\(newDate.month)/\(newDate.day)/\(newDate.year)"
-        }
-        else if(getDay() == "Sun"){
-            let newDate = Date().dayAfter
-            parseQueue.enter()
-            DispatchQueue(label: "parse-html-content", qos: .utility).async {
-                self.nextLetterDay = parseData(dataToParse: self.urlContent, Day: newDate.day, Month: (newDate.month - 1))
-                parseQueue.leave()
-            }
-            self.nextSchoolDateLabel.text = "On \(dateFormatter.string(from: newDate as Date))\n\(newDate.month)/\(newDate.day)/\(newDate.year)"
-        }
-        else{
-            let newDate = Date.tomorrow
-            parseQueue.enter()
-            DispatchQueue(label: "parse-html-content", qos: .utility).async {
-                self.nextLetterDay = parseData(dataToParse: self.urlContent, Day: newDate.day, Month: (newDate.month - 1))
-                parseQueue.leave()
-            }
-            self.nextSchoolDateLabel.text = "On \(dateFormatter.string(from: newDate as Date))\n\(newDate.month)/\(newDate.day)/\(newDate.year)"
-        }
-        
         parseQueue.wait()
         
+        self.nextSchoolDateLabel.text = "On \(newDate.weekdayName)\n\(newDate.month)/\(newDate.day)/\(newDate.year)"
         return nextLetterDay
     }
     
@@ -132,7 +105,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(getDay() == "Sat" || getDay() == "Sun"){
+        if(getDay() == 7 || getDay() == 1){
             todayLetterDayLabel.text = "No School Today"
         }
         else{
@@ -181,8 +154,8 @@ class HomeViewController: UIViewController {
     // --------
     // Function that connects to harriton website, and saves its HTML to urlContent
     // --------
-    func downloadData() {
-        let date = Date()
+    func downloadLMSDData() {
+        let date = DateInRegion()
         let myURLString = "https://www.lmsd.org/harritonhs/campus-life/letter-day?cal_date=\(date.year)-\(date.month)-\(date.day)"
         guard let myURL = URL(string: myURLString) else {
             print("Error: \(myURLString) is not a valid URL")
@@ -192,9 +165,13 @@ class HomeViewController: UIViewController {
             urlContent = try String(contentsOf: myURL, encoding: .ascii)
         } catch {
             print("oh boi")
-            }
         }
     }
+
+
+    // --------
+    // Function that takes data input, selected day and month, and returns the letter day from that day
+    // --------
 
     func parseData(dataToParse:String, Day:Int, Month:Int) -> String {
         do{
@@ -223,63 +200,7 @@ class HomeViewController: UIViewController {
         return "\(date.day)-\(date.month)-\(date.year)"
     }
     */
-    func getDay() -> String {
-        let CurrentDate = NSDate()
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = NSTimeZone() as TimeZone?
-        dateFormatter.dateFormat = "ccc"
-        
-        return dateFormatter.string(from: CurrentDate as Date)
- 
-    }
-    /*
-    func isTodayANewDay() -> Bool {
-        if(defaults.string(forKey: "Date") == getTodaysDate()) {
-            return false
-        }
-        else{
-            return true
-        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }*/
-//}
-
-extension Date {
-    static var yesterday: Date {
-        return Calendar.current.date(byAdding: .day, value: -1, to: Date().noon)!
-    }
-    static var tomorrow: Date {
-        return Calendar.current.date(byAdding: .day, value: 1, to: Date().noon)!
-    }
-    var dayBefore: Date {
-        return Calendar.current.date(byAdding: .day, value: -1, to: noon)!
-    }
-    var dayAfter: Date {
-        return Calendar.current.date(byAdding: .day, value: 1, to: noon)!
-    }
-    var twoDaysAfter: Date {
-        return Calendar.current.date(byAdding: .day, value: 2, to: noon)!
-    }
-    var threeDaysAfter: Date {
-        return Calendar.current.date(byAdding: .day, value: 3, to: noon)!
-    }
-    var noon: Date {
-        return Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)!
-    }
-    var year: Int {
-        return Calendar.current.component(.year, from: self)
-    }
-    var month: Int {
-        return Calendar.current.component(.month,  from: self)
-    }
-    var day: Int {
-        return Calendar.current.component(.day,  from: self)
-    }
-    var isLastDayOfMonth: Bool {
-        return dayAfter.month != month
+    func getDay() -> Int {
+        return DateInRegion().weekday
     }
 }
