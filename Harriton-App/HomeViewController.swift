@@ -17,9 +17,8 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var nextLetterDayLabel: UILabel!
     @IBOutlet weak var nextSchoolDateLabel: UILabel!
     
-    
-    let defaults = UserDefaults.standard
-    var LMSDUrlContent = ""
+    var CurrentLMSDUrlContent = ""
+    var VariableLMSDUrlContent = ""
     var todaysLetterDay = ""
     var nextLetterDay = ""
     
@@ -30,13 +29,13 @@ class HomeViewController: UIViewController {
             return todaysLetterDay
         }
         
-        if(LMSDUrlContent == ""){
+        if(CurrentLMSDUrlContent == ""){
             let downloadQueue = DispatchGroup()
             
             downloadQueue.enter()
             DispatchQueue(label: "download-content", qos: .utility).async {
                 let date = DateInRegion()
-                self.downloadLMSDData(Year: date.year, Month: date.month, Day: date.day)
+                self.CurrentLMSDUrlContent = self.downloadLMSDData(Year: date.year, Month: date.month, Day: date.day)
                 downloadQueue.leave()
             }
             downloadQueue.wait()
@@ -46,14 +45,15 @@ class HomeViewController: UIViewController {
         parseQueue.enter()
         
         DispatchQueue(label: "parse-html-content", qos: .utility).async {
-            self.todaysLetterDay = self.parseData(dataToParse: self.LMSDUrlContent, Day: Date().day, Month: (Date().month - 1))
+            self.todaysLetterDay = self.parseData(dataToParse: self.CurrentLMSDUrlContent, Day: DateInRegion().day, Month: (DateInRegion().month - 1))
             parseQueue.leave()
         }
-        
         parseQueue.wait()
         
         return todaysLetterDay
     }
+    
+    
     
     
     
@@ -64,25 +64,34 @@ class HomeViewController: UIViewController {
             return nextLetterDay
         }
         
-        if(LMSDUrlContent == ""){
-            let downloadQueue = DispatchGroup()
-            
-            downloadQueue.enter()
-            DispatchQueue(label: "download-content", qos: .utility).async {
-                self.downloadLMSDData(Year: DateInRegion().year, Month: DateInRegion().month, Day: DateInRegion().day)
-                downloadQueue.leave()
+        if(VariableLMSDUrlContent == ""){
+            if(CurrentLMSDUrlContent != ""){
+                VariableLMSDUrlContent = CurrentLMSDUrlContent
             }
-            downloadQueue.wait()
+            else{
+                let downloadQueue = DispatchGroup()
+                
+                downloadQueue.enter()
+                DispatchQueue(label: "download-content", qos: .utility).async {
+                    let date = DateInRegion()
+                    self.VariableLMSDUrlContent = self.downloadLMSDData(Year: date.year, Month: date.month, Day: date.day)
+                    downloadQueue.leave()
+                }
+                downloadQueue.wait()
+            }
         }
         
-        var newDate = DateInRegion() + 17.days
+        var newDate = DateInRegion()
+        
         while(nextLetterDay == "" || nextLetterDay == "No School Today"){
             newDate = newDate + 1.days
-            print(newDate)
-            self.nextLetterDay = self.parseData(dataToParse: self.LMSDUrlContent, Day: newDate.day, Month: (newDate.month - 1))
+            if(newDate >= getLastDateOnCalendar(dataToParse: VariableLMSDUrlContent)){
+                VariableLMSDUrlContent = downloadLMSDData(Year: newDate.year, Month: newDate.month, Day: newDate.day)
+            }
+            self.nextLetterDay = self.parseData(dataToParse: self.VariableLMSDUrlContent, Day: newDate.day, Month: (newDate.month - 1))
         }
         
-        self.nextSchoolDateLabel.text = "On \(newDate.weekdayName)\n\(newDate.month)/\(newDate.day)/\(newDate.year)"
+        self.nextSchoolDateLabel.text = "On \(newDate.weekdayName(.`default`))\n\(newDate.month)/\(newDate.day)/\(newDate.year)"
         return nextLetterDay
     }
     
@@ -99,9 +108,7 @@ class HomeViewController: UIViewController {
         else{
             todayLetterDayLabel.text = getTodaysLetterDay()
         }
-        downloadLMSDData(Year: 2019, Month: 1, Day: 5)
-        print(getLastDateOnCalendar(dataToParse: LMSDUrlContent).day!)
-        //nextLetterDayLabel.text = getNextLetterDay()
+        nextLetterDayLabel.text = getNextLetterDay()
         
         
         /*
@@ -143,16 +150,17 @@ class HomeViewController: UIViewController {
     // --------
     // Function that connects to harriton website, and saves its HTML to LMSDUrlContent
     // --------
-    func downloadLMSDData(Year:Int, Month:Int, Day:Int) {
+    func downloadLMSDData(Year:Int, Month:Int, Day:Int) -> String {
         let myURLString = "https://www.lmsd.org/harritonhs/campus-life/letter-day?cal_date=\(Year)-\(Month)-\(Day)"
         guard let myURL = URL(string: myURLString) else {
             print("Error: \(myURLString) is not a valid URL")
-            return
+            return ""
         }
         do {
-            LMSDUrlContent = try String(contentsOf: myURL, encoding: .ascii)
+            return try String(contentsOf: myURL, encoding: .ascii)
         } catch {
             print("oh boi")
+            return ""
         }
     }
 
@@ -193,7 +201,7 @@ class HomeViewController: UIViewController {
         return DateInRegion().weekday
     }
     
-    func getLastDateOnCalendar(dataToParse:String) -> DateComponents {
+    func getLastDateOnCalendar(dataToParse:String) -> DateInRegion {
         do{
             let doc = try SwiftSoup.parse(dataToParse)
             do{
@@ -202,14 +210,17 @@ class HomeViewController: UIViewController {
                     let Day:Int = Int((try div?.attr("data-day"))!)!
                     let Month:Int = Int((try div?.attr("data-month"))!)! + 1
                     let Year:Int = Int((try div?.attr("data-year"))!)!
-                    let date = DateComponents(year: Year, month: Month, day: Day)
-                    return date
+                    return DateInRegion(components: {
+                        $0.year = Year
+                        $0.month = Month
+                        $0.day = Day
+                    })!
                 }
             }
         }
         catch{
             print("Shite")
         }
-        return DateComponents()
+        return DateInRegion()
     }
 }
