@@ -77,12 +77,9 @@ class HomeViewController: UIViewController {
         
         var newDate = DateInRegion() + 17.days
         while(nextLetterDay == "" || nextLetterDay == "No School Today"){
-            newDate = newDate + 1.day
+            newDate = newDate + 1.days
             print(newDate)
             self.nextLetterDay = self.parseData(dataToParse: self.LMSDUrlContent, Day: newDate.day, Month: (newDate.month - 1))
-            if(newDate.compare(to: <#T##DateInRegion#>, granularity: <#T##Calendar.Component#>)   getLastDateOnCalendar(dataToParse: LMSDUrlContent)){
-                
-            }
         }
         
         self.nextSchoolDateLabel.text = "On \(newDate.weekdayName)\n\(newDate.month)/\(newDate.day)/\(newDate.year)"
@@ -103,7 +100,7 @@ class HomeViewController: UIViewController {
             todayLetterDayLabel.text = getTodaysLetterDay()
         }
         downloadLMSDData(Year: 2019, Month: 1, Day: 5)
-        print(getLastDateOnCalendar(dataToParse: LMSDUrlContent).day)
+        print(getLastDateOnCalendar(dataToParse: LMSDUrlContent).day!)
         //nextLetterDayLabel.text = getNextLetterDay()
         
         
