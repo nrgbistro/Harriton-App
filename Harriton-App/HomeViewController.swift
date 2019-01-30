@@ -16,15 +16,77 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var todayLetterDayLabel: UILabel!
     @IBOutlet weak var nextLetterDayLabel: UILabel!
     @IBOutlet weak var nextSchoolDateLabel: UILabel!
+    @IBOutlet weak var todaysDateLabel: UILabel!
     
     var CurrentLMSDUrlContent = ""
     var VariableLMSDUrlContent = ""
     var todaysLetterDay = ""
     var nextLetterDay = ""
+    let regionNY = Region(calendar: Calendars.gregorian, zone: Zones.americaNewYork, locale: Locales.englishUnitedStates)
     
     
     
+    // --------
+    // Main runner function
+    // --------
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let date = DateInRegion()
+        if(date.weekday == 7 || date.weekday == 1){
+            todayLetterDayLabel.text = "No School Today"
+        }
+        else{
+            todayLetterDayLabel.text = getTodaysLetterDay()
+        }
+        nextLetterDayLabel.text = getNextLetterDay()
+        
+        
+        // --------
+        // OLD IMPLEMENTATION OF OFFLINE FEATURES
+        // --------
+        
+        /*
+         NetworkManager.isReachable { networkManagerInstance in
+         
+         var day = Int(Date().day)
+         var month = Int(Date().month)
+         
+         
+         if(self.getTodaysDate() == self.defaults.string(forKey: "Date")){
+         self.todayLetterDayLabel.text = self.defaults.string(forKey: "LetterDay")
+         }
+         else{
+         self.getLetterDay(Day: day, Month: month)
+         }
+         if(self.todayLetterDayLabel.text == "" || self.todayLetterDayLabel.text == "ERROR"){
+         self.getLetterDay(Day: day, Month: month)
+         }
+         }
+         
+         NetworkManager.isUnreachable { networkManagerInstance in
+         
+         if(!self.isTodayANewDay()) {
+         if(self.defaults.string(forKey: "LetterDay") != nil){
+         self.todayLetterDayLabel.text = "CANNOT REFRESH"
+         }
+         else{
+         self.todayLetterDayLabel.text = self.defaults.string(forKey: "LetterDay")
+         }
+         }
+         else{
+         self.todayLetterDayLabel.text = "CANNOT REFRESH"
+         }
+         }
+         */
+    }
+    
+    
+    
+    // --------
+    // Gets todays letter day
+    // --------
     func getTodaysLetterDay() -> String {
+        let date = DateInRegion(region: regionNY)
         if(todaysLetterDay != ""){
             return todaysLetterDay
         }
@@ -50,15 +112,16 @@ class HomeViewController: UIViewController {
         }
         parseQueue.wait()
         
+        self.todaysDateLabel.text = "\(date.weekdayName(.`default`))\n\(date.month)/\(date.day)/\(date.year)"
+        
         return todaysLetterDay
     }
     
     
     
-    
-    
-    
-    
+    // --------
+    // Gets the next letter day (continues to find next day until it has a letter day value)
+    // --------
     func getNextLetterDay() -> String {
         if(nextLetterDay != ""){
             return nextLetterDay
@@ -91,64 +154,14 @@ class HomeViewController: UIViewController {
             self.nextLetterDay = self.parseData(dataToParse: self.VariableLMSDUrlContent, Day: newDate.day, Month: (newDate.month - 1))
         }
         
-        self.nextSchoolDateLabel.text = "On \(newDate.weekdayName(.`default`))\n\(newDate.month)/\(newDate.day)/\(newDate.year)"
+        self.nextSchoolDateLabel.text = "\(newDate.weekdayName(.`default`))\n\(newDate.month)/\(newDate.day)/\(newDate.year)"
         return nextLetterDay
     }
     
     
-    // --------
-    // Main 'runner' function
-    // --------
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if(getDay() == 7 || getDay() == 1){
-            todayLetterDayLabel.text = "No School Today"
-        }
-        else{
-            todayLetterDayLabel.text = getTodaysLetterDay()
-        }
-        nextLetterDayLabel.text = getNextLetterDay()
-        
-        
-        /*
-        NetworkManager.isReachable { networkManagerInstance in
-            
-            var day = Int(Date().day)
-            var month = Int(Date().month)
-            
-            
-            if(self.getTodaysDate() == self.defaults.string(forKey: "Date")){
-                self.todayLetterDayLabel.text = self.defaults.string(forKey: "LetterDay")
-            }
-            else{
-                self.getLetterDay(Day: day, Month: month)
-            }
-            if(self.todayLetterDayLabel.text == "" || self.todayLetterDayLabel.text == "ERROR"){
-                self.getLetterDay(Day: day, Month: month)
-            }
-        }
-        
-        NetworkManager.isUnreachable { networkManagerInstance in
-            
-            if(!self.isTodayANewDay()) {
-                if(self.defaults.string(forKey: "LetterDay") != nil){
-                    self.todayLetterDayLabel.text = "CANNOT REFRESH"
-                }
-                else{
-                    self.todayLetterDayLabel.text = self.defaults.string(forKey: "LetterDay")
-                }
-            }
-            else{
-                self.todayLetterDayLabel.text = "CANNOT REFRESH"
-            }
-        }
-         */
-    }
-    
     
     // --------
-    // Function that connects to harriton website, and saves its HTML to LMSDUrlContent
+    // Connects to harriton website, and saves its HTML to LMSDUrlContent
     // --------
     func downloadLMSDData(Year:Int, Month:Int, Day:Int) -> String {
         let myURLString = "https://www.lmsd.org/harritonhs/campus-life/letter-day?cal_date=\(Year)-\(Month)-\(Day)"
@@ -166,7 +179,7 @@ class HomeViewController: UIViewController {
 
 
     // --------
-    // Function that takes data input, selected day and month, and returns the letter day from that day
+    // Takes data input, selected day and month, and returns the letter day from that day
     // --------
 
     func parseData(dataToParse:String, Day:Int, Month:Int) -> String {
@@ -189,17 +202,7 @@ class HomeViewController: UIViewController {
             return "ERROR"
         }
     }
- 
- /*
-    func getTodaysDate() -> String {
-        let date = Date()
-        return "\(date.day)-\(date.month)-\(date.year)"
-    }
-    */
-    
-    func getDay() -> Int {
-        return DateInRegion().weekday
-    }
+
     
     func getLastDateOnCalendar(dataToParse:String) -> DateInRegion {
         do{

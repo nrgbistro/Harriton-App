@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="05c-c2-0DV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="81t-OV-a7f">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -18,49 +18,79 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lH5-K0-pAh" userLabel="Today's letter day:">
-                                <rect key="frame" x="0.0" y="75" width="414" height="75"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lH5-K0-pAh">
+                                <rect key="frame" x="0.0" y="70" width="414" height="49"/>
                                 <fontDescription key="fontDescription" name="KannadaSangamMN" family="Kannada Sangam MN" pointSize="38"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Next School Day" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ul5-UG-5yf" userLabel="Next letter day:">
-                                <rect key="frame" x="0.0" y="202" width="414" height="75"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="KannadaSangamMN" family="Kannada Sangam MN" pointSize="38"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9Q-dg-plB" userLabel="Next Letter Day Label">
-                                <rect key="frame" x="0.0" y="255" width="414" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9Q-dg-plB" userLabel="Next Letter Day Label">
+                                <rect key="frame" x="0.0" y="330.66666666666669" width="414" height="38.666666666666686"/>
                                 <fontDescription key="fontDescription" name="KannadaSangamMN-Bold" family="Kannada Sangam MN" pointSize="30"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8H-BO-tk7" userLabel="Next School Day Date">
-                                <rect key="frame" x="0.0" y="301" width="414" height="83"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OLg-vA-MeJ" userLabel="Todays Date">
+                                <rect key="frame" x="0.0" y="175" width="414" height="57"/>
                                 <fontDescription key="fontDescription" name="KannadaSangamMN" family="Kannada Sangam MN" pointSize="22"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGn-d9-hMA" userLabel="Letter Day Label">
-                                <rect key="frame" x="0.0" y="128" width="414" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGn-d9-hMA" userLabel="Letter Day Label">
+                                <rect key="frame" x="0.0" y="128" width="414" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="giN-Zv-551"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="KannadaSangamMN-Bold" family="Kannada Sangam MN" pointSize="30"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next School Day" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ul5-UG-5yf" userLabel="Next letter day">
+                                <rect key="frame" x="0.0" y="273" width="414" height="49"/>
+                                <fontDescription key="fontDescription" name="KannadaSangamMN" family="Kannada Sangam MN" pointSize="38"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8H-BO-tk7" userLabel="Next School Day Date">
+                                <rect key="frame" x="0.0" y="380" width="414" height="57"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="57" id="Ucm-u9-hAU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="KannadaSangamMN" family="Kannada Sangam MN" pointSize="22"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Q8H-BO-tk7" firstAttribute="top" secondItem="d9Q-dg-plB" secondAttribute="bottom" constant="10.666666666666629" id="1Yg-eN-9to"/>
+                            <constraint firstItem="ul5-UG-5yf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="3uV-Yg-a7i"/>
+                            <constraint firstItem="zGn-d9-hMA" firstAttribute="leading" secondItem="lH5-K0-pAh" secondAttribute="leading" id="7iz-gy-YLr"/>
+                            <constraint firstItem="lH5-K0-pAh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7r2-gv-z7U"/>
+                            <constraint firstItem="OLg-vA-MeJ" firstAttribute="top" secondItem="zGn-d9-hMA" secondAttribute="bottom" constant="8" id="C8D-q1-2px"/>
+                            <constraint firstItem="ul5-UG-5yf" firstAttribute="top" secondItem="lH5-K0-pAh" secondAttribute="bottom" constant="154" id="GGt-80-Wk3"/>
+                            <constraint firstItem="d9Q-dg-plB" firstAttribute="top" secondItem="ul5-UG-5yf" secondAttribute="bottom" constant="8.5" id="Quw-GD-mKk"/>
+                            <constraint firstItem="Q8H-BO-tk7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="S2e-Z6-px0"/>
+                            <constraint firstItem="ul5-UG-5yf" firstAttribute="top" secondItem="OLg-vA-MeJ" secondAttribute="bottom" constant="41" id="SsS-PD-nOV"/>
+                            <constraint firstItem="zGn-d9-hMA" firstAttribute="trailing" secondItem="lH5-K0-pAh" secondAttribute="trailing" id="aiN-Cg-gi5"/>
+                            <constraint firstItem="Q8H-BO-tk7" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="bGs-xa-gjG"/>
+                            <constraint firstItem="lH5-K0-pAh" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="eSa-X9-1So"/>
+                            <constraint firstItem="Q8H-BO-tk7" firstAttribute="top" secondItem="d9Q-dg-plB" secondAttribute="bottom" constant="10.666666666666629" id="fUc-Xk-4EU"/>
+                            <constraint firstItem="d9Q-dg-plB" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="gFu-dV-mQH"/>
+                            <constraint firstItem="lH5-K0-pAh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="ia6-tU-pzi"/>
+                            <constraint firstItem="zGn-d9-hMA" firstAttribute="top" secondItem="lH5-K0-pAh" secondAttribute="bottom" constant="9" id="kd0-q9-bbD"/>
+                            <constraint firstItem="d9Q-dg-plB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="q5R-ld-UpK"/>
+                            <constraint firstItem="zGn-d9-hMA" firstAttribute="leading" secondItem="OLg-vA-MeJ" secondAttribute="leading" id="r4t-LB-7vP"/>
+                            <constraint firstItem="zGn-d9-hMA" firstAttribute="trailing" secondItem="OLg-vA-MeJ" secondAttribute="trailing" id="xIM-Ab-ilQ"/>
+                            <constraint firstItem="ul5-UG-5yf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="zq4-PW-hZv"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="home-25" id="UhF-6W-571">
                         <color key="badgeColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="TodaysDateLabel" destination="OLg-vA-MeJ" id="QCb-ee-KJM"/>
                         <outlet property="nextLetterDayLabel" destination="d9Q-dg-plB" id="HdX-aL-QIq"/>
                         <outlet property="nextSchoolDateLabel" destination="Q8H-BO-tk7" id="Veb-WI-jcc"/>
                         <outlet property="todayLetterDayLabel" destination="zGn-d9-hMA" id="Oo2-iy-gv0"/>
@@ -91,17 +121,17 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
-        <!--Info-->
+        <!--Alarm-->
         <scene sceneID="2FE-d3-xjB">
             <objects>
-                <viewController id="Vad-XH-3jN" customClass="ThirdViewController" customModule="Harriton_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Vad-XH-3jN" customClass="AlarmViewController" customModule="Harriton_App" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ruk-sv-6oO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <viewLayoutGuide key="safeArea" id="ZiD-sZ-i4B"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Info" image="about-25" id="caL-ft-A99"/>
+                    <tabBarItem key="tabBarItem" title="Alarm" image="about-25" id="caL-ft-A99"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Got-UA-JPV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -115,26 +145,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PK0-YY-i20">
-                                <rect key="frame" x="0.0" y="20" width="375" height="132"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PK0-YY-i20">
+                                <rect key="frame" x="0.0" y="20" width="414" height="98"/>
                                 <string key="text">Report a bug with 
 this app</string>
                                 <fontDescription key="fontDescription" name="KannadaSangamMN" family="Kannada Sangam MN" pointSize="38"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ggg" allowsEditingTextAttributes="YES" borderStyle="line" placeholder="Your Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gea-lC-fCO">
-                                <rect key="frame" x="65" y="219" width="245" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" allowsEditingTextAttributes="YES" borderStyle="line" placeholder="Message" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="H8c-cs-BR2">
+                                <rect key="frame" x="85" y="243" width="245" height="168"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="168" id="EuM-eT-irk"/>
+                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" allowsEditingTextAttributes="YES" borderStyle="line" placeholder="Message" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="H8c-cs-BR2">
-                                <rect key="frame" x="65" y="266" width="245" height="161"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" allowsEditingTextAttributes="YES" borderStyle="line" placeholder="Your Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gea-lC-fCO">
+                                <rect key="frame" x="85" y="192" width="245" height="21"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
@@ -142,13 +172,24 @@ this app</string>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="H8c-cs-BR2" firstAttribute="top" secondItem="Gea-lC-fCO" secondAttribute="bottom" constant="30" id="Lae-EO-J5Z"/>
+                            <constraint firstItem="Gea-lC-fCO" firstAttribute="leading" secondItem="Wjp-7e-1WB" secondAttribute="leading" constant="85" id="N5W-90-PlF"/>
+                            <constraint firstItem="PK0-YY-i20" firstAttribute="top" secondItem="Wjp-7e-1WB" secondAttribute="top" id="P9s-TK-Jjv"/>
+                            <constraint firstItem="PK0-YY-i20" firstAttribute="leading" secondItem="Wjp-7e-1WB" secondAttribute="leading" id="PvX-R1-IOi"/>
+                            <constraint firstItem="PK0-YY-i20" firstAttribute="trailing" secondItem="Wjp-7e-1WB" secondAttribute="trailing" id="aTc-l9-bQa"/>
+                            <constraint firstItem="Gea-lC-fCO" firstAttribute="top" secondItem="PK0-YY-i20" secondAttribute="bottom" constant="74" id="eLS-rP-aeN"/>
+                            <constraint firstItem="Wjp-7e-1WB" firstAttribute="trailing" secondItem="Gea-lC-fCO" secondAttribute="trailing" constant="84" id="mF8-ba-QZk"/>
+                            <constraint firstItem="Wjp-7e-1WB" firstAttribute="trailing" secondItem="H8c-cs-BR2" secondAttribute="trailing" constant="84" id="oeJ-xF-Lvc"/>
+                            <constraint firstItem="H8c-cs-BR2" firstAttribute="leading" secondItem="Wjp-7e-1WB" secondAttribute="leading" constant="85" id="qOR-IR-AWG"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Wjp-7e-1WB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Contact" image="contact-25" id="Q8G-h1-vGQ"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yqH-fG-uJ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1045.5999999999999" y="1251.7241379310346"/>
+            <point key="canvasLocation" x="1044.9275362318842" y="1251.358695652174"/>
         </scene>
         <!--Events-->
         <scene sceneID="6D8-ov-Mnk">
@@ -166,8 +207,34 @@ this app</string>
             </objects>
             <point key="canvasLocation" x="1046" y="-122"/>
         </scene>
+        <!--Splash Screen View Controller-->
+        <scene sceneID="5AQ-5p-ldr">
+            <objects>
+                <viewController id="81t-OV-a7f" customClass="SplashScreenViewController" customModule="Harriton_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QTJ-MG-fhD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Harriton Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Ea3-pp-CHE">
+                                <rect key="frame" x="143" y="304" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.72549019607843135" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="bDW-Yv-PWo"/>
+                    </view>
+                    <connections>
+                        <outlet property="Logo" destination="Ea3-pp-CHE" id="Bz0-Xd-b9t"/>
+                        <segue destination="05c-c2-0DV" kind="custom" identifier="splashScreen" customClass="SlideSegue" customModule="Harriton_App" customModuleProvider="target" id="Vg6-sR-3Se"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="emn-Hn-ffQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-913" y="133"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="Harriton Logo" width="340" height="340"/>
         <image name="about-25" width="25" height="25"/>
         <image name="contact-25" width="25" height="25"/>
         <image name="exclamation-mark-25" width="25" height="25"/>

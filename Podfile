@@ -7,5 +7,6 @@ target 'Harriton-App' do
 pod 'SwiftSoup'
 pod 'ReachabilitySwift'
 pod 'SwiftDate', '5.0'
+pod 'Hero'
 
 end
