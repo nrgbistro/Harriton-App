@@ -109,7 +109,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="splashSegue"/>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="heroModalAnimationTypeString" value="auto"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="L1I-JY-gEc"/>
                         <segue destination="oQN-fR-8wd" kind="relationship" relationship="viewControllers" id="DGe-Ca-Nia"/>
@@ -207,10 +214,10 @@ this app</string>
             </objects>
             <point key="canvasLocation" x="1046" y="-122"/>
         </scene>
-        <!--Splash Screen View Controller-->
+        <!--Splash Screen-->
         <scene sceneID="5AQ-5p-ldr">
             <objects>
-                <viewController id="81t-OV-a7f" customClass="SplashScreenViewController" customModule="Harriton_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Splash Screen" id="81t-OV-a7f" customClass="SplashScreenViewController" customModule="Harriton_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QTJ-MG-fhD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -218,19 +225,27 @@ this app</string>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Harriton Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Ea3-pp-CHE">
                                 <rect key="frame" x="143" y="304" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabledForSubviews" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="splashSegue"/>
+                                </userDefinedRuntimeAttributes>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.72549019607843135" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="bDW-Yv-PWo"/>
                     </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="Logo" destination="Ea3-pp-CHE" id="Bz0-Xd-b9t"/>
-                        <segue destination="05c-c2-0DV" kind="custom" identifier="splashScreen" customClass="SlideSegue" customModule="Harriton_App" customModuleProvider="target" id="Vg6-sR-3Se"/>
+                        <segue destination="05c-c2-0DV" kind="show" identifier="splashScreen" customClass="SlideSegue" customModule="Harriton_App" id="kTg-xx-meU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="emn-Hn-ffQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-913" y="133"/>
+            <point key="canvasLocation" x="-790" y="133"/>
         </scene>
     </scenes>
     <resources>

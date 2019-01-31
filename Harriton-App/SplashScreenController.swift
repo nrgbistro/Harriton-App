@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Hero
 
 class SplashScreenViewController: UIViewController {
     
@@ -15,7 +16,19 @@ class SplashScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let screenFrame = UIScreen.main.bounds
+        //let screenFrame = UIScreen.main.bounds
+        
+        let vc1 = SplashScreenViewController()
+        let vc2 = tabBarController
+        
+        vc1.hero.isEnabled = true
+        vc2?.hero.isEnabled = true
+        
+        vc1.hero.modalAnimationType = .autoReverse(presenting: .pull(direction: .right))
+        
+        present(vc2!, animated: true, completion: nil)
+        
+        
         
         /*anim{(settings) -> animClosure in
             settings.duration = 0.01
@@ -41,7 +54,7 @@ class SplashScreenViewController: UIViewController {
             return {
                 self.Logo.frame.origin.x = (screenFrame.maxX + 500)
             }
-        }*/
+        }
         
         self.Logo.frame.origin.x = screenFrame.midX - (self.Logo.frame.width / 2)
         
@@ -53,7 +66,7 @@ class SplashScreenViewController: UIViewController {
             UIView.animate(withDuration: 1, animations: {
                 self.Logo.frame.origin.x = (screenFrame.maxX + 500)
             })
-        }
+        }*/
     }
     
     func switchView() {

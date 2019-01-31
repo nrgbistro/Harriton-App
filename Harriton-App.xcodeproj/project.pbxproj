@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		03E8BBBF0252E380B107F6D7 /* Pods_Harriton_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01779DD876A618B2DD54BFDD /* Pods_Harriton_App.framework */; };
-		312DE9902200DE6A001DEF21 /* SlideSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 312DE98F2200DE6A001DEF21 /* SlideSegue.swift */; };
+		311B801E2203774B00AC42AA /* SlideSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311B801D2203774B00AC42AA /* SlideSegue.swift */; };
 		3183446E2180C11C00FBA8C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3183446D2180C11C00FBA8C3 /* AppDelegate.swift */; };
 		318344702180C11C00FBA8C3 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3183446F2180C11C00FBA8C3 /* SecondViewController.swift */; };
 		318344732180C11C00FBA8C3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 318344712180C11C00FBA8C3 /* Main.storyboard */; };
@@ -23,7 +23,7 @@
 
 /* Begin PBXFileReference section */
 		01779DD876A618B2DD54BFDD /* Pods_Harriton_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Harriton_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		312DE98F2200DE6A001DEF21 /* SlideSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideSegue.swift; sourceTree = "<group>"; };
+		311B801D2203774B00AC42AA /* SlideSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideSegue.swift; sourceTree = "<group>"; };
 		3183446A2180C11C00FBA8C3 /* Harriton-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Harriton-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3183446D2180C11C00FBA8C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3183446F2180C11C00FBA8C3 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
@@ -80,7 +80,7 @@
 				31AFF8582182334B00E79967 /* ContactViewController.swift */,
 				31F3B6FD2194B5DF00227088 /* NetworkManager.swift */,
 				31C7A8A021FA1B4D00C69F9D /* SplashScreenController.swift */,
-				312DE98F2200DE6A001DEF21 /* SlideSegue.swift */,
+				311B801D2203774B00AC42AA /* SlideSegue.swift */,
 				318344712180C11C00FBA8C3 /* Main.storyboard */,
 				318344762180C11D00FBA8C3 /* LaunchScreen.storyboard */,
 				318344742180C11D00FBA8C3 /* Assets.xcassets */,
@@ -230,7 +230,7 @@
 				3183446E2180C11C00FBA8C3 /* AppDelegate.swift in Sources */,
 				31AFF8572182333C00E79967 /* AlarmViewController.swift in Sources */,
 				31C7A8A121FA1B4D00C69F9D /* SplashScreenController.swift in Sources */,
-				312DE9902200DE6A001DEF21 /* SlideSegue.swift in Sources */,
+				311B801E2203774B00AC42AA /* SlideSegue.swift in Sources */,
 				31AFF855218231E000E79967 /* HomeViewController.swift in Sources */,
 				31AFF8592182334B00E79967 /* ContactViewController.swift in Sources */,
 			);
