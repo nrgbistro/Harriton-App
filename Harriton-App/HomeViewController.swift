@@ -31,9 +31,10 @@ class HomeViewController: UIViewController {
     // --------
     override func viewDidLoad() {
         super.viewDidLoad()
-        let date = DateInRegion()
+        let date = DateInRegion(region: regionNY)
         if(date.weekday == 7 || date.weekday == 1){
             todayLetterDayLabel.text = "No School Today"
+            self.todaysDateLabel.text = "\(date.weekdayName(.`default`))\n\(date.month)/\(date.day)/\(date.year)"
         }
         else{
             todayLetterDayLabel.text = getTodaysLetterDay()
@@ -96,18 +97,19 @@ class HomeViewController: UIViewController {
             
             downloadQueue.enter()
             DispatchQueue(label: "download-content", qos: .utility).async {
-                let date = DateInRegion()
+                let date = DateInRegion(region: self.regionNY)
                 self.CurrentLMSDUrlContent = self.downloadLMSDData(Year: date.year, Month: date.month, Day: date.day)
                 downloadQueue.leave()
             }
             downloadQueue.wait()
         }
+        
         let parseQueue = DispatchGroup()
         
         parseQueue.enter()
         
         DispatchQueue(label: "parse-html-content", qos: .utility).async {
-            self.todaysLetterDay = self.parseData(dataToParse: self.CurrentLMSDUrlContent, Day: DateInRegion().day, Month: (DateInRegion().month - 1))
+            self.todaysLetterDay = self.parseData(dataToParse: self.CurrentLMSDUrlContent, Day: DateInRegion(region: self.regionNY).day, Month: (DateInRegion(region: self.regionNY).month - 1))
             parseQueue.leave()
         }
         parseQueue.wait()
@@ -136,7 +138,7 @@ class HomeViewController: UIViewController {
                 
                 downloadQueue.enter()
                 DispatchQueue(label: "download-content", qos: .utility).async {
-                    let date = DateInRegion()
+                    let date = DateInRegion(region: self.regionNY)
                     self.VariableLMSDUrlContent = self.downloadLMSDData(Year: date.year, Month: date.month, Day: date.day)
                     downloadQueue.leave()
                 }
@@ -144,7 +146,7 @@ class HomeViewController: UIViewController {
             }
         }
         
-        var newDate = DateInRegion()
+        var newDate = DateInRegion(region: regionNY)
         
         while(nextLetterDay == "" || nextLetterDay == "No School Today"){
             newDate = newDate + 1.days
@@ -181,7 +183,6 @@ class HomeViewController: UIViewController {
     // --------
     // Takes data input, selected day and month, and returns the letter day from that day
     // --------
-
     func parseData(dataToParse:String, Day:Int, Month:Int) -> String {
         do{
             let doc = try SwiftSoup.parse(dataToParse)
@@ -224,6 +225,6 @@ class HomeViewController: UIViewController {
         catch{
             print("Shite")
         }
-        return DateInRegion()
+        return DateInRegion(region: regionNY)
     }
 }
