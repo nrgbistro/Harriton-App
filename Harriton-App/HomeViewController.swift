@@ -30,6 +30,8 @@ class HomeViewController: UIViewController {
     // Main runner function
     // --------
     override func viewDidLoad() {
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         super.viewDidLoad()
         let date = DateInRegion(region: regionNY)
         if(date.weekday == 7 || date.weekday == 1){
